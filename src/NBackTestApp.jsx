@@ -112,7 +112,7 @@ const NBackTestApp = () => {
       const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
       
       // This is your actual webhook URL
-      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/e9d05fe5-985d-4026-8a06-8c310b626927';
+      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/8825105d-d4e5-40f1-a679-95bb15252fa0';
       
       const data = {
         firstName,
@@ -188,23 +188,23 @@ const NBackTestApp = () => {
   // Render based on current screen
   const renderScreen = () => {
     switch (screen) {
-        case 'welcome':
-            return (
-              <div className="card p-10 m-4 max-w-xl w-full mx-auto">
-                <h1 className="text-4xl font-medium text-center mb-6" style={{ color: '#502a12' }}>2-Back Cognitive Assessment</h1>
-                <p className="text-center mb-8" style={{ color: '#502a12' }}>
-                  Welcome to the 2-Back Test, a cognitive assessment tool that measures working memory and fluid intelligence.
-                </p>
-                <div className="flex justify-center">
-                  <button 
-                    onClick={() => setScreen('registration')}
-                    className="button-primary"
-                  >
-                    Get Started
-                  </button>
-                </div>
-              </div>
-            );
+      case 'welcome':
+        return (
+          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+            <h1 className="text-4xl font-medium text-center mb-6" style={{ color: '#502a12' }}>2-Back Cognitive Assessment</h1>
+            <p className="text-center mb-8" style={{ color: '#502a12' }}>
+              Welcome to the 2-Back Test, a cognitive assessment tool that measures working memory and fluid intelligence.
+            </p>
+            <div className="flex justify-center">
+              <button 
+                onClick={() => setScreen('registration')}
+                className="button-primary"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        );
         
       case 'registration':
         return (
@@ -506,7 +506,7 @@ const NBackTestApp = () => {
   };
   
   return (
-    <div className="font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
+    <div className="min-h-screen bg-white flex items-center justify-center p-6 font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
       {renderScreen()}
     </div>
   );
