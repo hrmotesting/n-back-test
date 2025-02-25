@@ -112,7 +112,7 @@ const NBackTestApp = () => {
       const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
       
       // This is your actual webhook URL
-      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/8825105d-d4e5-40f1-a679-95bb15252fa0';
+      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/e9d05fe5-985d-4026-8a06-8c310b626927';
       
       const data = {
         firstName,
@@ -506,7 +506,7 @@ const NBackTestApp = () => {
   };
   
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6 font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
+    <div className="font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
       {renderScreen()}
     </div>
   );
