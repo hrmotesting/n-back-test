@@ -106,18 +106,19 @@ const NBackTestApp = () => {
     setTimeout(() => setCurrentIndex(0), 1000);
   };
   
-  // Submit results to GHL webhook
-  const submitResults = async () => {
+  // Submit results to GHL webhook with status
+  const submitResults = async (status = 'completed') => {
     try {
       const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
       
       // This is your actual webhook URL
-      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/04e9e785-fddc-4475-9b59-8546ddb27cb8';
+      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/09ed837c-bfba-42c9-87d1-54101aacfe31';
       
       const data = {
         firstName,
         email,
         testType: `${nLevel}-Back Test`,
+        testStatus: status,
         totalTrials: score.total,
         correctResponses: score.correct,
         incorrectResponses: score.incorrect,
@@ -171,11 +172,52 @@ const NBackTestApp = () => {
         console.log(`Test contained ${actualMatches} matches out of ${sequence.length - nLevel} possible trials (${((actualMatches/(sequence.length - nLevel))*100).toFixed(1)}%)`);
         
         setScreen('results');
+        
+        // Send webhook with completed status
+        submitResults('completed');
       }
     }, 2500); // Show each letter for 2.5 seconds
     
     return () => clearTimeout(timer);
   }, [currentIndex, isTestRunning, sequence, userResponses.length, trialCount, nLevel]);
+  
+  // Set timeout for user response - count no response as incorrect
+  useEffect(() => {
+    if (!isTestRunning || currentIndex < 0 || currentIndex < nLevel) return;
+    
+    // Set a timeout for user response (slightly shorter than the letter display time)
+    const responseTimeout = setTimeout(() => {
+      // If the user hasn't responded yet, count it as incorrect
+      if (isTestRunning && currentIndex >= nLevel) {
+        const userResponsesForCurrent = userResponses.filter(r => r.index === currentIndex);
+        
+        // If no response has been logged for this letter yet
+        if (userResponsesForCurrent.length === 0) {
+          const actualMatch = sequence[currentIndex] === sequence[currentIndex - nLevel];
+          
+          setFeedback('incorrect');
+          setTimeout(() => setFeedback(null), 500);
+          
+          setScore(prevScore => ({
+            correct: prevScore.correct,
+            incorrect: prevScore.incorrect + 1,
+            total: prevScore.total + 1
+          }));
+          
+          setUserResponses(prev => [...prev, { 
+            index: currentIndex,
+            stimulus: sequence[currentIndex],
+            nBackStimulus: sequence[currentIndex - nLevel],
+            actualMatch: actualMatch,
+            userResponse: null, // Indicates no response
+            isCorrect: false
+          }]);
+        }
+      }
+    }, 2200); // Set to 2200ms, slightly less than the 2500ms letter display time
+    
+    return () => clearTimeout(responseTimeout);
+  }, [currentIndex, isTestRunning, nLevel, sequence, userResponses]);
   
   // Reset test when n-level changes
   useEffect(() => {
@@ -184,6 +226,44 @@ const NBackTestApp = () => {
       setCurrentIndex(-1);
     }
   }, [nLevel]);
+  
+  // Track when users abandon the test
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      // If user has registered but not completed the test
+      if (screen !== 'welcome' && screen !== 'results') {
+        const status = screen === 'registration' ? 'not_started' : 
+                       screen === 'instructions' ? 'not_started' : 'abandoned';
+        
+        // Use sendBeacon for more reliable data sending during page unload
+        const data = {
+          firstName,
+          email,
+          testType: `${nLevel}-Back Test`,
+          testStatus: status,
+          totalTrials: score.total,
+          correctResponses: score.correct,
+          incorrectResponses: score.incorrect,
+          accuracy: score.total > 0 ? ((score.correct / score.total) * 100).toFixed(2) : "0.00",
+          date: new Date().toISOString()
+        };
+        
+        // Use navigator.sendBeacon which is more reliable during page unload
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(
+            'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/e9d05fe5-985d-4026-8a06-8c310b626927', 
+            JSON.stringify(data)
+          );
+        }
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [screen, firstName, email, nLevel, score]);
   
   // Render based on current screen
   const renderScreen = () => {
@@ -331,6 +411,8 @@ const NBackTestApp = () => {
                   }
                   
                   if (isValid) {
+                    // Submit the registration info
+                    submitResults('registered');
                     setScreen('instructions');
                   } else {
                     alert(errorMessage);
@@ -415,6 +497,8 @@ const NBackTestApp = () => {
                 onClick={() => {
                   setScreen('test');
                   startTest();
+                  // Send webhook when user starts the test
+                  submitResults('started');
                 }}
                 className="button-primary"
               >
@@ -532,6 +616,8 @@ const NBackTestApp = () => {
                 onClick={() => {
                   setIsTestRunning(false);
                   setScreen('instructions');
+                  // Send webhook when user quits test
+                  submitResults('abandoned');
                 }}
                 className="button-secondary"
               >
@@ -592,7 +678,6 @@ const NBackTestApp = () => {
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
               <button 
                 onClick={() => {
-                  submitResults();
                   setScreen('instructions');
                 }}
                 className="button-primary"
