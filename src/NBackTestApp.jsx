@@ -190,8 +190,19 @@ const NBackTestApp = () => {
     switch (screen) {
         case 'welcome':
             return (
-              <div className="card p-10 max-w-xl w-full mx-auto" style={{ background: 'white' }}>
-                {/* rest of the content */}
+              <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+                <h1 className="text-4xl font-medium text-center mb-6" style={{ color: '#502a12' }}>2-Back Cognitive Assessment</h1>
+                <p className="text-center mb-8" style={{ color: '#502a12' }}>
+                  Welcome to the 2-Back Test, a cognitive assessment tool that measures working memory and fluid intelligence.
+                </p>
+                <div className="flex justify-center">
+                  <button 
+                    onClick={() => setScreen('registration')}
+                    className="button-primary"
+                  >
+                    Get Started
+                  </button>
+                </div>
               </div>
             );
         
@@ -495,7 +506,7 @@ const NBackTestApp = () => {
   };
   
   return (
-    <div style={{ fontFamily: 'Bitter, serif', background: 'transparent' }}>
+    <div className="font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
       {renderScreen()}
     </div>
   );
