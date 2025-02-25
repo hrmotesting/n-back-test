@@ -190,75 +190,120 @@ const NBackTestApp = () => {
     switch (screen) {
       case 'welcome':
         return (
-          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
-            <h1 className="text-4xl font-medium text-center mb-6" style={{ color: '#502a12' }}>2-Back Cognitive Assessment</h1>
-            <p className="text-center mb-8" style={{ color: '#502a12' }}>
+          <div style={{ 
+            width: '500px',
+            height: '430px',
+            padding: '24px',
+            boxSizing: 'border-box',
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <h1 style={{ color: '#502a12', fontSize: '28px', fontWeight: 500, marginBottom: '16px' }}>2-Back Cognitive Assessment</h1>
+            <p style={{ color: '#502a12', marginBottom: '24px' }}>
               Welcome to the 2-Back Test, a cognitive assessment tool that measures working memory and fluid intelligence.
             </p>
-            <div className="flex justify-center">
-              <button 
-                onClick={() => setScreen('registration')}
-                className="button-primary"
-              >
-                Get Started
-              </button>
-            </div>
+            <button 
+              onClick={() => setScreen('registration')}
+              className="button-primary"
+            >
+              Get Started
+            </button>
           </div>
         );
         
       case 'registration':
         return (
-          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
-            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>Registration</h1>
-            <div className="space-y-6 mb-6">
-              <div>
-                <label className="block mb-2 font-medium" style={{ color: '#502a12' }} htmlFor="firstName">First Name <span className="text-red-500">*</span></label>
+          <div style={{ 
+            width: '500px',
+            height: '430px',
+            padding: '24px',
+            boxSizing: 'border-box',
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            position: 'relative'
+          }}>
+            <h1 style={{ color: '#502a12', fontSize: '24px', fontWeight: 500, marginBottom: '20px', textAlign: 'center' }}>Registration</h1>
+            <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', color: '#502a12', marginBottom: '8px', fontWeight: 500 }} htmlFor="firstName">
+                  First Name <span style={{ color: '#ff005e' }}>*</span>
+                </label>
                 <input
                   id="firstName"
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 font-bitter ${!firstName.trim() ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-pink-200'}`}
-                  style={{ color: '#502a12', fontFamily: 'Bitter' }}
+                  style={{ 
+                    width: '100%', 
+                    padding: '10px 12px',
+                    border: !firstName.trim() ? '1px solid #ff005e' : '1px solid #ccc',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    fontFamily: 'Bitter, serif',
+                    color: '#502a12',
+                    boxSizing: 'border-box'
+                  }}
                   required
                 />
-                {!firstName.trim() && <p className="mt-1 text-sm text-red-500">First name is required</p>}
+                {!firstName.trim() && <p style={{ color: '#ff005e', margin: '4px 0 0 0', fontSize: '14px' }}>First name is required</p>}
               </div>
               
-              <div>
-                <label className="block mb-2 font-medium" style={{ color: '#502a12' }} htmlFor="email">Email Address <span className="text-red-500">*</span></label>
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', color: '#502a12', marginBottom: '8px', fontWeight: 500 }} htmlFor="email">
+                  Email Address <span style={{ color: '#ff005e' }}>*</span>
+                </label>
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 font-bitter ${email.trim() === '' ? 'border-red-300 focus:ring-red-200' : !/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' ? 'border-orange-300 focus:ring-orange-200' : 'border-gray-300 focus:ring-pink-200'}`}
-                  style={{ color: '#502a12', fontFamily: 'Bitter' }}
+                  style={{ 
+                    width: '100%', 
+                    padding: '10px 12px',
+                    border: email.trim() === '' ? '1px solid #ff005e' : !/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' ? '1px solid orange' : '1px solid #ccc',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    fontFamily: 'Bitter, serif',
+                    color: '#502a12',
+                    boxSizing: 'border-box'
+                  }}
                   required
                 />
-                {email.trim() === '' && <p className="mt-1 text-sm text-red-500">Email address is required</p>}
-                {!/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' && <p className="mt-1 text-sm text-orange-500">Please enter a valid email address</p>}
+                {email.trim() === '' && <p style={{ color: '#ff005e', margin: '4px 0 0 0', fontSize: '14px' }}>Email address is required</p>}
+                {!/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' && <p style={{ color: 'orange', margin: '4px 0 0 0', fontSize: '14px' }}>Please enter a valid email address</p>}
               </div>
               
-              <div className="flex items-start">
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '16px' }}>
                 <input
                   id="terms"
                   type="checkbox"
                   checked={acceptedTerms}
                   onChange={(e) => setAcceptedTerms(e.target.checked)}
-                  className={`mt-1 mr-3 h-5 w-5 rounded ${!acceptedTerms ? 'ring-2 ring-red-300' : ''}`}
+                  style={{ 
+                    marginRight: '10px', 
+                    marginTop: '4px',
+                    width: '16px',
+                    height: '16px'
+                  }}
                   required
                 />
                 <div>
-                  <label className="font-medium" style={{ color: '#502a12' }} htmlFor="terms">
-                    I accept the <a href="#" style={{ color: '#ff005e', textDecoration: 'underline' }}>Terms and Conditions</a> <span className="text-red-500">*</span>
+                  <label style={{ color: '#502a12', fontWeight: 500, fontSize: '15px' }} htmlFor="terms">
+                    I accept the <a href="#" style={{ color: '#ff005e', textDecoration: 'underline' }}>Terms and Conditions</a> <span style={{ color: '#ff005e' }}>*</span>
                   </label>
-                  {!acceptedTerms && <p className="mt-1 text-sm text-red-500">You must accept the terms and conditions</p>}
+                  {!acceptedTerms && <p style={{ color: '#ff005e', margin: '4px 0 0 0', fontSize: '14px' }}>You must accept the terms and conditions</p>}
                 </div>
               </div>
             </div>
             
-            <div className="flex justify-center space-x-4">
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', position: 'absolute', bottom: '24px', left: 0, right: 0 }}>
               <button 
                 onClick={() => setScreen('welcome')}
                 className="button-secondary"
@@ -301,34 +346,46 @@ const NBackTestApp = () => {
         
       case 'instructions':
         return (
-          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
-            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>{nLevel}-Back Test Instructions</h1>
+          <div style={{ 
+            width: '500px',
+            height: '430px',
+            padding: '24px',
+            boxSizing: 'border-box',
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <h1 style={{ color: '#502a12', fontSize: '24px', fontWeight: 500, marginBottom: '20px', textAlign: 'center' }}>{nLevel}-Back Test Instructions</h1>
             
-            <div className="space-y-4 mb-8" style={{ color: '#502a12' }}>
-              <p>
+            <div style={{ flex: 1, overflowY: 'auto', color: '#502a12', marginBottom: '16px' }}>
+              <p style={{ marginBottom: '12px' }}>
                 In this test, you will see a sequence of letters, one at a time.
               </p>
-              <p>
+              <p style={{ marginBottom: '12px' }}>
                 Your task is to identify when the <strong>current letter</strong> matches the letter that appeared <strong>{nLevel} positions back</strong> in the sequence.
               </p>
-              <p>
-                For example, in a 3-back test with the sequence: <span className="font-mono bg-gray-100 px-2 py-1 rounded">T, H, G, <strong>T</strong>, ...</span>
+              <p style={{ marginBottom: '12px' }}>
+                For example, in a 3-back test with the sequence: <span style={{ fontFamily: 'monospace', background: '#f5f5f5', padding: '2px 6px', borderRadius: '4px' }}>T, H, G, <strong>T</strong>, ...</span>
                 <br />
                 The 4th letter (T) matches the letter that appeared 3 positions earlier.
               </p>
-              <p>
+              <p style={{ marginBottom: '12px' }}>
                 Press <strong>Match</strong> if the current letter matches the one {nLevel} positions back.
                 <br />
                 Press <strong>No Match</strong> if they are different.
               </p>
-              <p>
+              <p style={{ marginBottom: '12px' }}>
                 You'll receive immediate feedback after each response.
               </p>
             </div>
             
-            <div className="mb-8">
-              <label className="block mb-2 font-medium" style={{ color: '#502a12' }} htmlFor="nLevel">Difficulty Level (n-back):</label>
-              <div className="flex items-center space-x-4">
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', color: '#502a12', marginBottom: '8px', fontWeight: 500 }} htmlFor="nLevel">
+                Difficulty Level (n-back):
+              </label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <input
                   id="nLevel"
                   type="range"
@@ -336,14 +393,18 @@ const NBackTestApp = () => {
                   max={maxLevel}
                   value={nLevel}
                   onChange={(e) => setNLevel(parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer"
-                  style={{ accentColor: '#ff005e' }}
+                  style={{ 
+                    flex: '1',
+                    height: '8px',
+                    borderRadius: '4px',
+                    accentColor: '#ff005e'
+                  }}
                 />
-                <span className="text-xl font-bold" style={{ color: '#ff005e' }}>{nLevel}</span>
+                <span style={{ color: '#ff005e', fontSize: '20px', fontWeight: 'bold' }}>{nLevel}</span>
               </div>
             </div>
             
-            <div className="flex justify-center space-x-4">
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
               <button 
                 onClick={() => setScreen('registration')}
                 className="button-secondary"
@@ -365,51 +426,76 @@ const NBackTestApp = () => {
         
       case 'test':
         return (
-          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
-            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>{nLevel}-Back Test</h1>
+          <div style={{ 
+            width: '500px',
+            height: '430px',
+            padding: '24px',
+            boxSizing: 'border-box',
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <h1 style={{ color: '#502a12', fontSize: '24px', fontWeight: 500, marginBottom: '16px', textAlign: 'center' }}>{nLevel}-Back Test</h1>
             
-            <div className="mb-6">
-              <div className="flex justify-between mb-2" style={{ color: '#502a12' }}>
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#502a12' }}>
                 <span>Progress:</span>
                 <span>{currentIndex + 1} / {sequence.length}</span>
               </div>
-              <div className="w-full h-3 bg-gray-200 rounded-full">
+              <div style={{ width: '100%', height: '10px', backgroundColor: '#f0f0f0', borderRadius: '5px', overflow: 'hidden' }}>
                 <div 
-                  className="h-3 rounded-full" 
                   style={{ 
+                    height: '100%', 
+                    backgroundColor: '#ff005e', 
                     width: `${((currentIndex + 1) / sequence.length) * 100}%`,
-                    backgroundColor: '#ff005e',
                     transition: 'width 0.3s ease'
                   }}
                 ></div>
               </div>
             </div>
             
-            <div 
-              className={`letter-display w-40 h-40 mx-auto flex items-center justify-center rounded-lg border-4 mb-8 ${
-                feedback === 'correct' ? 'border-green-500 bg-green-50' : 
-                feedback === 'incorrect' ? 'border-red-500 bg-red-50' : 
-                'border-pink-300 bg-white'
-              }`}
-              style={{ 
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s ease' 
-              }}
-            >
-              <span className="text-8xl font-bold" style={{ color: '#502a12' }}>
+            <div style={{ 
+              width: '160px',
+              height: '160px',
+              margin: '0 auto 24px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '8px',
+              border: '4px solid',
+              borderColor: feedback === 'correct' ? '#4CAF50' : feedback === 'incorrect' ? '#ff4d4d' : '#ff005e',
+              backgroundColor: feedback === 'correct' ? '#e8f5e9' : feedback === 'incorrect' ? '#ffebee' : 'white',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+            }}>
+              <span style={{ 
+                fontSize: '80px', 
+                fontWeight: 'bold', 
+                color: '#502a12',
+                transition: 'all 0.3s ease'
+              }}>
                 {currentIndex >= 0 && sequence[currentIndex]}
               </span>
             </div>
             
-            <div className="flex justify-center space-x-4 mb-6">
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
               <button 
                 onClick={() => handleResponse(false)}
                 disabled={currentIndex < nLevel || !isTestRunning}
-                className="button-primary"
                 style={{ 
-                  backgroundColor: '#ff4d4d', 
+                  backgroundColor: '#ff4d4d',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '12px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: (currentIndex < nLevel || !isTestRunning) ? 'not-allowed' : 'pointer',
                   opacity: (currentIndex < nLevel || !isTestRunning) ? 0.5 : 1,
-                  cursor: (currentIndex < nLevel || !isTestRunning) ? 'not-allowed' : 'pointer' 
+                  transition: 'all 0.3s ease'
                 }}
               >
                 No Match
@@ -417,11 +503,18 @@ const NBackTestApp = () => {
               <button 
                 onClick={() => handleResponse(true)}
                 disabled={currentIndex < nLevel || !isTestRunning}
-                className="button-primary"
                 style={{ 
-                  backgroundColor: '#4CAF50', 
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '12px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: (currentIndex < nLevel || !isTestRunning) ? 'not-allowed' : 'pointer',
                   opacity: (currentIndex < nLevel || !isTestRunning) ? 0.5 : 1,
-                  cursor: (currentIndex < nLevel || !isTestRunning) ? 'not-allowed' : 'pointer'
+                  transition: 'all 0.3s ease'
                 }}
               >
                 Match
@@ -429,12 +522,12 @@ const NBackTestApp = () => {
             </div>
             
             {currentIndex < nLevel && (
-              <div className="text-center mb-6" style={{ color: '#502a12' }}>
+              <div style={{ textAlign: 'center', marginBottom: '8px', color: '#502a12' }}>
                 {nLevel - currentIndex} more letters needed before you can start responding...
               </div>
             )}
             
-            <div className="flex justify-center">
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <button 
                 onClick={() => {
                   setIsTestRunning(false);
@@ -452,41 +545,51 @@ const NBackTestApp = () => {
         const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
         
         return (
-          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
-            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>Test Results</h1>
+          <div style={{ 
+            width: '500px',
+            height: '430px',
+            padding: '24px',
+            boxSizing: 'border-box',
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <h1 style={{ color: '#502a12', fontSize: '24px', fontWeight: 500, marginBottom: '16px', textAlign: 'center' }}>Test Results</h1>
             
-            <div className="mb-8">
-              <h2 className="text-2xl font-medium mb-4" style={{ color: '#502a12' }}>Performance Summary</h2>
-              <div className="bg-gray-50 p-6 rounded-lg" style={{ boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)' }}>
-                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+              <h2 style={{ color: '#502a12', fontSize: '20px', fontWeight: 500, marginBottom: '12px' }}>Performance Summary</h2>
+              <div style={{ backgroundColor: '#f9f9f9', borderRadius: '8px', padding: '16px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
                   <span style={{ color: '#502a12' }}>Test Type:</span>
-                  <span className="font-medium" style={{ color: '#502a12' }}>{nLevel}-Back Test</span>
+                  <span style={{ color: '#502a12', fontWeight: 500 }}>{nLevel}-Back Test</span>
                 </div>
-                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
                   <span style={{ color: '#502a12' }}>Total Trials:</span>
-                  <span className="font-medium" style={{ color: '#502a12' }}>{score.total}</span>
+                  <span style={{ color: '#502a12', fontWeight: 500 }}>{score.total}</span>
                 </div>
-                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
                   <span style={{ color: '#502a12' }}>Correct Responses:</span>
-                  <span className="font-medium text-green-600">{score.correct}</span>
+                  <span style={{ color: '#4CAF50', fontWeight: 500 }}>{score.correct}</span>
                 </div>
-                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
                   <span style={{ color: '#502a12' }}>Incorrect Responses:</span>
-                  <span className="font-medium text-red-600">{score.incorrect}</span>
+                  <span style={{ color: '#ff4d4d', fontWeight: 500 }}>{score.incorrect}</span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: '#502a12' }}>Accuracy:</span>
-                  <span className="font-medium" style={{ color: '#ff005e' }}>{accuracy.toFixed(2)}%</span>
+                  <span style={{ color: '#ff005e', fontWeight: 500 }}>{accuracy.toFixed(2)}%</span>
                 </div>
               </div>
               
-              <div className="text-center mt-6" style={{ color: '#502a12' }}>
+              <div style={{ textAlign: 'center', marginTop: '16px', color: '#502a12' }}>
                 <p>Your results have been recorded.</p>
                 <p>Thank you for participating in the assessment!</p>
               </div>
             </div>
             
-            <div className="flex justify-center">
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
               <button 
                 onClick={() => {
                   submitResults();
@@ -506,7 +609,15 @@ const NBackTestApp = () => {
   };
   
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6 font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
+    <div style={{ 
+      width: '500px',
+      height: '430px',
+      margin: '0 auto',
+      backgroundColor: 'transparent',
+      fontFamily: 'Bitter, serif',
+      overflow: 'hidden',
+      position: 'relative'
+    }}>
       {renderScreen()}
     </div>
   );
