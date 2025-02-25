@@ -188,74 +188,80 @@ const NBackTestApp = () => {
   // Render based on current screen
   const renderScreen = () => {
     switch (screen) {
-        case 'welcome':
-            return (
-              <div className="flex flex-col items-center justify-center p-8 space-y-8 bg-white rounded-lg shadow-lg max-w-md w-full">
-                <h1 className="text-3xl font-bold text-teal-600">2-Back Cognitive Assessment</h1>
-                <p className="text-center text-gray-700">
-                  Welcome to the 2-Back Test, a cognitive assessment tool that measures working memory and fluid intelligence.
-                </p>
-                <button 
-                  onClick={() => setScreen('registration')}
-                  className="px-6 py-2 rounded-full bg-teal-500 text-white font-semibold hover:bg-teal-600 transition-colors"
-                >
-                  Get Started
-                </button>
-              </div>
-            );
+      case 'welcome':
+        return (
+          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+            <h1 className="text-4xl font-medium text-center mb-6" style={{ color: '#502a12' }}>2-Back Cognitive Assessment</h1>
+            <p className="text-center mb-8" style={{ color: '#502a12' }}>
+              Welcome to the 2-Back Test, a cognitive assessment tool that measures working memory and fluid intelligence.
+            </p>
+            <div className="flex justify-center">
+              <button 
+                onClick={() => setScreen('registration')}
+                className="button-primary"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        );
         
       case 'registration':
         return (
-          <div className="card">
-            <h1 className="title">Registration</h1>
-            <div className="form-group">
-              <label htmlFor="firstName">First Name *</label>
-              <input
-                id="firstName"
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className={`input ${!firstName.trim() ? 'input-error' : ''}`}
-                required
-              />
-              {!firstName.trim() && <p className="error-text">First name is required</p>}
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="email">Email Address *</label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={`input ${email.trim() === '' ? 'input-error' : !/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' ? 'input-error' : ''}`}
-                required
-              />
-              {email.trim() === '' && <p className="error-text">Email address is required</p>}
-              {!/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' && <p className="error-text">Please enter a valid email address</p>}
-            </div>
-            
-            <div className="checkbox-group">
-              <input
-                id="terms"
-                type="checkbox"
-                checked={acceptedTerms}
-                onChange={(e) => setAcceptedTerms(e.target.checked)}
-                className="checkbox"
-                required
-              />
+          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>Registration</h1>
+            <div className="space-y-6 mb-6">
               <div>
-                <label htmlFor="terms">
-                  I accept the <a href="#" style={{color: '#0d9488'}}>Terms and Conditions</a> *
-                </label>
-                {!acceptedTerms && <p className="error-text">You must accept the terms and conditions</p>}
+                <label className="block mb-2 font-medium" style={{ color: '#502a12' }} htmlFor="firstName">First Name <span className="text-red-500">*</span></label>
+                <input
+                  id="firstName"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 font-bitter ${!firstName.trim() ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-pink-200'}`}
+                  style={{ color: '#502a12', fontFamily: 'Bitter' }}
+                  required
+                />
+                {!firstName.trim() && <p className="mt-1 text-sm text-red-500">First name is required</p>}
+              </div>
+              
+              <div>
+                <label className="block mb-2 font-medium" style={{ color: '#502a12' }} htmlFor="email">Email Address <span className="text-red-500">*</span></label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 font-bitter ${email.trim() === '' ? 'border-red-300 focus:ring-red-200' : !/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' ? 'border-orange-300 focus:ring-orange-200' : 'border-gray-300 focus:ring-pink-200'}`}
+                  style={{ color: '#502a12', fontFamily: 'Bitter' }}
+                  required
+                />
+                {email.trim() === '' && <p className="mt-1 text-sm text-red-500">Email address is required</p>}
+                {!/^\S+@\S+\.\S+$/.test(email) && email.trim() !== '' && <p className="mt-1 text-sm text-orange-500">Please enter a valid email address</p>}
+              </div>
+              
+              <div className="flex items-start">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                  className={`mt-1 mr-3 h-5 w-5 rounded ${!acceptedTerms ? 'ring-2 ring-red-300' : ''}`}
+                  required
+                />
+                <div>
+                  <label className="font-medium" style={{ color: '#502a12' }} htmlFor="terms">
+                    I accept the <a href="#" style={{ color: '#ff005e', textDecoration: 'underline' }}>Terms and Conditions</a> <span className="text-red-500">*</span>
+                  </label>
+                  {!acceptedTerms && <p className="mt-1 text-sm text-red-500">You must accept the terms and conditions</p>}
+                </div>
               </div>
             </div>
             
-            <div className="flex-row">
+            <div className="flex justify-center space-x-4">
               <button 
                 onClick={() => setScreen('welcome')}
-                className="button button-secondary"
+                className="button-secondary"
               >
                 Back
               </button>
@@ -285,7 +291,7 @@ const NBackTestApp = () => {
                     alert(errorMessage);
                   }
                 }}
-                className="button"
+                className="button-primary"
               >
                 Continue
               </button>
@@ -295,10 +301,10 @@ const NBackTestApp = () => {
         
       case 'instructions':
         return (
-          <div className="card">
-            <h1 className="title">{nLevel}-Back Test Instructions</h1>
+          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>{nLevel}-Back Test Instructions</h1>
             
-            <div>
+            <div className="space-y-4 mb-8" style={{ color: '#502a12' }}>
               <p>
                 In this test, you will see a sequence of letters, one at a time.
               </p>
@@ -306,7 +312,7 @@ const NBackTestApp = () => {
                 Your task is to identify when the <strong>current letter</strong> matches the letter that appeared <strong>{nLevel} positions back</strong> in the sequence.
               </p>
               <p>
-                For example, in a 3-back test with the sequence: <span style={{fontFamily: 'monospace'}}>T, H, G, <strong>T</strong>, ...</span>
+                For example, in a 3-back test with the sequence: <span className="font-mono bg-gray-100 px-2 py-1 rounded">T, H, G, <strong>T</strong>, ...</span>
                 <br />
                 The 4th letter (T) matches the letter that appeared 3 positions earlier.
               </p>
@@ -320,9 +326,9 @@ const NBackTestApp = () => {
               </p>
             </div>
             
-            <div className="form-group">
-              <label htmlFor="nLevel">Difficulty Level (n-back):</label>
-              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+            <div className="mb-8">
+              <label className="block mb-2 font-medium" style={{ color: '#502a12' }} htmlFor="nLevel">Difficulty Level (n-back):</label>
+              <div className="flex items-center space-x-4">
                 <input
                   id="nLevel"
                   type="range"
@@ -330,16 +336,17 @@ const NBackTestApp = () => {
                   max={maxLevel}
                   value={nLevel}
                   onChange={(e) => setNLevel(parseInt(e.target.value))}
-                  style={{width: '100%'}}
+                  className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer"
+                  style={{ accentColor: '#ff005e' }}
                 />
-                <span style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#0d9488'}}>{nLevel}</span>
+                <span className="text-xl font-bold" style={{ color: '#ff005e' }}>{nLevel}</span>
               </div>
             </div>
             
-            <div className="flex-row">
+            <div className="flex justify-center space-x-4">
               <button 
                 onClick={() => setScreen('registration')}
-                className="button button-secondary"
+                className="button-secondary"
               >
                 Back
               </button>
@@ -348,7 +355,7 @@ const NBackTestApp = () => {
                   setScreen('test');
                   startTest();
                 }}
-                className="button"
+                className="button-primary"
               >
                 Start Test
               </button>
@@ -358,63 +365,82 @@ const NBackTestApp = () => {
         
       case 'test':
         return (
-          <div className="card">
-            <h1 className="title">{nLevel}-Back Test</h1>
+          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>{nLevel}-Back Test</h1>
             
-            <div className="progress-container">
-              <div className="progress-label">
+            <div className="mb-6">
+              <div className="flex justify-between mb-2" style={{ color: '#502a12' }}>
                 <span>Progress:</span>
                 <span>{currentIndex + 1} / {sequence.length}</span>
               </div>
-              <div className="progress-bar">
+              <div className="w-full h-3 bg-gray-200 rounded-full">
                 <div 
-                  className="progress-fill" 
-                  style={{ width: `${((currentIndex + 1) / sequence.length) * 100}%` }}
+                  className="h-3 rounded-full" 
+                  style={{ 
+                    width: `${((currentIndex + 1) / sequence.length) * 100}%`,
+                    backgroundColor: '#ff005e',
+                    transition: 'width 0.3s ease'
+                  }}
                 ></div>
               </div>
             </div>
             
-            <div className={`letter-display ${
-              feedback === 'correct' ? 'letter-correct' : 
-              feedback === 'incorrect' ? 'letter-incorrect' : ''
-            }`}>
-              <span>
+            <div 
+              className={`letter-display w-40 h-40 mx-auto flex items-center justify-center rounded-lg border-4 mb-8 ${
+                feedback === 'correct' ? 'border-green-500 bg-green-50' : 
+                feedback === 'incorrect' ? 'border-red-500 bg-red-50' : 
+                'border-pink-300 bg-white'
+              }`}
+              style={{ 
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                transition: 'all 0.3s ease' 
+              }}
+            >
+              <span className="text-8xl font-bold" style={{ color: '#502a12' }}>
                 {currentIndex >= 0 && sequence[currentIndex]}
               </span>
             </div>
             
-            <div className="flex-row">
+            <div className="flex justify-center space-x-4 mb-6">
               <button 
                 onClick={() => handleResponse(false)}
                 disabled={currentIndex < nLevel || !isTestRunning}
-                className={`button button-red`}
-                style={{opacity: (currentIndex < nLevel || !isTestRunning) ? 0.5 : 1}}
+                className="button-primary"
+                style={{ 
+                  backgroundColor: '#ff4d4d', 
+                  opacity: (currentIndex < nLevel || !isTestRunning) ? 0.5 : 1,
+                  cursor: (currentIndex < nLevel || !isTestRunning) ? 'not-allowed' : 'pointer' 
+                }}
               >
                 No Match
               </button>
               <button 
                 onClick={() => handleResponse(true)}
                 disabled={currentIndex < nLevel || !isTestRunning}
-                className={`button button-green`}
-                style={{opacity: (currentIndex < nLevel || !isTestRunning) ? 0.5 : 1}}
+                className="button-primary"
+                style={{ 
+                  backgroundColor: '#4CAF50', 
+                  opacity: (currentIndex < nLevel || !isTestRunning) ? 0.5 : 1,
+                  cursor: (currentIndex < nLevel || !isTestRunning) ? 'not-allowed' : 'pointer'
+                }}
               >
                 Match
               </button>
             </div>
             
             {currentIndex < nLevel && (
-              <div className="text-center" style={{marginTop: '1rem'}}>
+              <div className="text-center mb-6" style={{ color: '#502a12' }}>
                 {nLevel - currentIndex} more letters needed before you can start responding...
               </div>
             )}
             
-            <div className="flex-row" style={{marginTop: '1rem'}}>
+            <div className="flex justify-center">
               <button 
                 onClick={() => {
                   setIsTestRunning(false);
                   setScreen('instructions');
                 }}
-                className="button button-secondary"
+                className="button-secondary"
               >
                 Quit Test
               </button>
@@ -426,47 +452,47 @@ const NBackTestApp = () => {
         const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
         
         return (
-          <div className="card">
-            <h1 className="title">Test Results</h1>
+          <div className="card p-10 m-4 max-w-xl w-full mx-auto">
+            <h1 className="text-3xl font-medium text-center mb-6" style={{ color: '#502a12' }}>Test Results</h1>
             
-            <div>
-              <h2 style={{fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem'}}>Performance Summary</h2>
-              <div className="results-container">
-                <div className="results-row">
-                  <span>Test Type:</span>
-                  <span style={{fontWeight: 600}}>{nLevel}-Back Test</span>
+            <div className="mb-8">
+              <h2 className="text-2xl font-medium mb-4" style={{ color: '#502a12' }}>Performance Summary</h2>
+              <div className="bg-gray-50 p-6 rounded-lg" style={{ boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)' }}>
+                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                  <span style={{ color: '#502a12' }}>Test Type:</span>
+                  <span className="font-medium" style={{ color: '#502a12' }}>{nLevel}-Back Test</span>
                 </div>
-                <div className="results-row">
-                  <span>Total Trials:</span>
-                  <span style={{fontWeight: 600}}>{score.total}</span>
+                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                  <span style={{ color: '#502a12' }}>Total Trials:</span>
+                  <span className="font-medium" style={{ color: '#502a12' }}>{score.total}</span>
                 </div>
-                <div className="results-row">
-                  <span>Correct Responses:</span>
-                  <span className="correct-text">{score.correct}</span>
+                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                  <span style={{ color: '#502a12' }}>Correct Responses:</span>
+                  <span className="font-medium text-green-600">{score.correct}</span>
                 </div>
-                <div className="results-row">
-                  <span>Incorrect Responses:</span>
-                  <span className="incorrect-text">{score.incorrect}</span>
+                <div className="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+                  <span style={{ color: '#502a12' }}>Incorrect Responses:</span>
+                  <span className="font-medium text-red-600">{score.incorrect}</span>
                 </div>
-                <div className="results-row">
-                  <span>Accuracy:</span>
-                  <span style={{fontWeight: 600}}>{accuracy.toFixed(2)}%</span>
+                <div className="flex justify-between items-center">
+                  <span style={{ color: '#502a12' }}>Accuracy:</span>
+                  <span className="font-medium" style={{ color: '#ff005e' }}>{accuracy.toFixed(2)}%</span>
                 </div>
               </div>
               
-              <div className="text-center" style={{margin: '1rem 0'}}>
+              <div className="text-center mt-6" style={{ color: '#502a12' }}>
                 <p>Your results have been recorded.</p>
                 <p>Thank you for participating in the assessment!</p>
               </div>
             </div>
             
-            <div className="flex-row">
+            <div className="flex justify-center">
               <button 
                 onClick={() => {
                   submitResults();
                   setScreen('instructions');
                 }}
-                className="button"
+                className="button-primary"
               >
                 Try Again
               </button>
@@ -480,10 +506,8 @@ const NBackTestApp = () => {
   };
   
   return (
-    <div className="container">
-      <div style={{width: '100%', maxWidth: '550px'}}>
-        {renderScreen()}
-      </div>
+    <div className="min-h-screen bg-white flex items-center justify-center p-6 font-bitter" style={{ fontFamily: 'Bitter, serif' }}>
+      {renderScreen()}
     </div>
   );
 };

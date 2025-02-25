@@ -8,10 +8,69 @@
     <meta name="description" content="N-Back Test Cognitive Assessment" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- Add Bitter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;700&display=swap" rel="stylesheet">
     <title>N-Back Test</title>
-    
-    <!-- Add Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              bitter: ['Bitter', 'serif'],
+            },
+            colors: {
+              primary: '#ff005e',
+              textColor: '#502a12',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        font-family: 'Bitter', serif;
+        color: #502a12;
+        background-color: white;
+      }
+      .card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      .button-primary {
+        background-color: #ff005e;
+        color: white;
+        font-family: 'Bitter', serif;
+        font-weight: 500;
+        padding: 10px 24px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+      }
+      .button-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 0, 94, 0.3);
+      }
+      .button-secondary {
+        background-color: #f0f0f0;
+        color: #502a12;
+        font-family: 'Bitter', serif;
+        font-weight: 500;
+        padding: 10px 24px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+      }
+      .button-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .letter-display {
+        transition: all 0.3s ease;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
