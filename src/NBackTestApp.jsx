@@ -112,7 +112,7 @@ const NBackTestApp = () => {
       const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
       
       // This is your actual webhook URL
-      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/8825105d-d4e5-40f1-a679-95bb15252fa0';
+      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/04e9e785-fddc-4475-9b59-8546ddb27cb8';
       
       const data = {
         firstName,
