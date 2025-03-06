@@ -112,8 +112,12 @@ const NBackTestApp = () => {
       const accuracy = score.total > 0 ? (score.correct / score.total) * 100 : 0;
       
       // This is your actual webhook URL
-      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/09ed837c-bfba-42c9-87d1-54101aacfe31';
+      const webhookUrl = 'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/0b65edb5-dfaa-45b0-9fb0-1e0e1a590b21';
       
+      // Use a CORS proxy service temporarily for testing
+      const corsProxyUrl = 'https://corsproxy.io/?';
+      
+      // Prepare the data
       const data = {
         firstName,
         email,
@@ -126,22 +130,23 @@ const NBackTestApp = () => {
         date: new Date().toISOString()
       };
       
-      const response = await fetch(webhookUrl, {
+      console.log('Sending webhook data:', data);
+      
+      // Send through the proxy
+      const response = await fetch(corsProxyUrl + encodeURIComponent(webhookUrl), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       });
       
-      if (!response.ok) {
-        throw new Error('Failed to submit results');
-      }
+      console.log('Webhook response status:', response.status);
       
-      console.log('Results submitted:', data);
       return true;
     } catch (error) {
       console.error('Error submitting results:', error);
+      
       return false;
     }
   };
@@ -171,10 +176,10 @@ const NBackTestApp = () => {
         }
         console.log(`Test contained ${actualMatches} matches out of ${sequence.length - nLevel} possible trials (${((actualMatches/(sequence.length - nLevel))*100).toFixed(1)}%)`);
         
-        setScreen('results');
-        
         // Send webhook with completed status
         submitResults('completed');
+        
+        setScreen('results');
       }
     }, 2500); // Show each letter for 2.5 seconds
     
@@ -229,13 +234,13 @@ const NBackTestApp = () => {
   
   // Track when users abandon the test
   useEffect(() => {
-    const handleBeforeUnload = () => {
+    const handleBeforeUnload = (event) => {
       // If user has registered but not completed the test
       if (screen !== 'welcome' && screen !== 'results') {
-        const status = screen === 'registration' ? 'not_started' : 
-                       screen === 'instructions' ? 'not_started' : 'abandoned';
+        // Determine status based on screen
+        const status = (screen === 'registration' || screen === 'instructions') ? 'not_started' : 'abandoned';
         
-        // Use sendBeacon for more reliable data sending during page unload
+        // Prepare data
         const data = {
           firstName,
           email,
@@ -248,13 +253,16 @@ const NBackTestApp = () => {
           date: new Date().toISOString()
         };
         
-        // Use navigator.sendBeacon which is more reliable during page unload
+        // Try sendBeacon as it's more reliable during page unload
         if (navigator.sendBeacon) {
-          navigator.sendBeacon(
-            'https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/e9d05fe5-985d-4026-8a06-8c310b626927', 
-            JSON.stringify(data)
-          );
+          const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+          navigator.sendBeacon('https://corsproxy.io/?https://services.leadconnectorhq.com/hooks/YAxaIdy0u9P2IAPJGLRR/webhook-trigger/0b65edb5-dfaa-45b0-9fb0-1e0e1a590b21', blob);
         }
+        
+        // Show confirmation message
+        event.preventDefault();
+        event.returnValue = '';
+        return '';
       }
     };
 
@@ -290,7 +298,18 @@ const NBackTestApp = () => {
             </p>
             <button 
               onClick={() => setScreen('registration')}
-              className="button-primary"
+              style={{ 
+                backgroundColor: '#ff005e',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50px',
+                padding: '10px 24px',
+                fontFamily: 'Bitter, serif',
+                fontSize: '16px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
             >
               Get Started
             </button>
@@ -386,7 +405,18 @@ const NBackTestApp = () => {
             <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', position: 'absolute', bottom: '24px', left: 0, right: 0 }}>
               <button 
                 onClick={() => setScreen('welcome')}
-                className="button-secondary"
+                style={{ 
+                  backgroundColor: '#f0f0f0',
+                  color: '#502a12',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               >
                 Back
               </button>
@@ -418,7 +448,18 @@ const NBackTestApp = () => {
                     alert(errorMessage);
                   }
                 }}
-                className="button-primary"
+                style={{ 
+                  backgroundColor: '#ff005e',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               >
                 Continue
               </button>
@@ -489,7 +530,18 @@ const NBackTestApp = () => {
             <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
               <button 
                 onClick={() => setScreen('registration')}
-                className="button-secondary"
+                style={{ 
+                  backgroundColor: '#f0f0f0',
+                  color: '#502a12',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               >
                 Back
               </button>
@@ -500,7 +552,18 @@ const NBackTestApp = () => {
                   // Send webhook when user starts the test
                   submitResults('started');
                 }}
-                className="button-primary"
+                style={{ 
+                  backgroundColor: '#ff005e',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               >
                 Start Test
               </button>
@@ -619,7 +682,18 @@ const NBackTestApp = () => {
                   // Send webhook when user quits test
                   submitResults('abandoned');
                 }}
-                className="button-secondary"
+                style={{ 
+                  backgroundColor: '#f0f0f0',
+                  color: '#502a12',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               >
                 Quit Test
               </button>
@@ -680,7 +754,18 @@ const NBackTestApp = () => {
                 onClick={() => {
                   setScreen('instructions');
                 }}
-                className="button-primary"
+                style={{ 
+                  backgroundColor: '#ff005e',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  padding: '10px 24px',
+                  fontFamily: 'Bitter, serif',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               >
                 Try Again
               </button>
